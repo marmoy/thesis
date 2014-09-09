@@ -4,7 +4,7 @@
 
 #from gnuradio import digital
 #from gnuradio import eng_notation
-from gnuradio import gr, gru
+from gnuradio import gr #, gru
 from gnuradio import uhd
 #from gnuradio.wxgui import scopesink2
 from gnuradio.wxgui import scopesink2
