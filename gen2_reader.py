@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # Developed by: Michael Buettner (buettner@cs.washington.edu)
-#Modified for USRP2 by: Yuanqing Zheng (yuanqing1@ntu.edu.sg)
+# Modified for USRP2 by: Yuanqing Zheng (yuanqing1@ntu.edu.sg)
 
 #from gnuradio import digital
 #from gnuradio import eng_notation
-from gnuradio import gr #, gru
+from gnuradio import gr  #, gru
 from gnuradio import uhd
 #from gnuradio.wxgui import scopesink2
 from gnuradio.wxgui import scopesink2
@@ -33,7 +33,6 @@ class top_block(grc_wxgui.top_block_gui):
     '''
 
     def __init__(self):
-
         # GUI setup
         grc_wxgui.top_block_gui.__init__(self, title="Grc Wisp Reader")
 
@@ -55,10 +54,11 @@ class top_block(grc_wxgui.top_block_gui):
         # Constants
         amplitude = 1
         interp_rate = 128
-        dec_rate = 16 #		dec_rate = 8
-        sw_dec = 2 #	sw_dec = 4
+        dec_rate = 16  #		dec_rate = 8
+        sw_dec = 2  #	sw_dec = 4
 
-        num_taps = int(64000 / ( (dec_rate * 4) * 256 ))  #Filter matched to 1/4 of the 256 kHz tag cycle  #		num_taps = int(64000 / ( (dec_rate * 4) * 40 )) #Filter matched to 1/4 of the 40 kHz tag cycle
+        num_taps = int(64000 / ((
+                                dec_rate * 4) * 256 ))  #Filter matched to 1/4 of the 256 kHz tag cycle  #		num_taps = int(64000 / ( (dec_rate * 4) * 40 )) #Filter matched to 1/4 of the 40 kHz tag cycle
 
         taps = [complex(1, 1)] * num_taps
 
@@ -73,7 +73,8 @@ class top_block(grc_wxgui.top_block_gui):
 
         tag_decoder = rfid.tag_decoder_f()
 
-        command_gate = rfid.command_gate_cc(12, 60, 64000000 / dec_rate / sw_dec)         #		command_gate = rfid.command_gate_cc(12, 250, 64000000 / dec_rate / sw_dec)
+        command_gate = rfid.command_gate_cc(12, 60,
+                                            64000000 / dec_rate / sw_dec)  #		command_gate = rfid.command_gate_cc(12, 250, 64000000 / dec_rate / sw_dec)
 
         to_complex = gr.float_to_complex()
         amp = gr.multiply_const_ff(amplitude)
@@ -124,7 +125,7 @@ class top_block(grc_wxgui.top_block_gui):
         self.connect(amp, to_complex)
         self.connect(to_complex, tx)
 
-    #################
+        #################
 
 
 def main():
@@ -132,20 +133,15 @@ def main():
     tb = top_block()
 
     tb.Run(True)
-    while 1:
-        c = raw_input("'Q' to quit. L to get log.\n")
-        if c == "q":
-            break
 
-        if c == "L" or c == "l":
-            log_file.write("T,CMD,ERROR,BITS,SNR\n")
-            log = tb.reader.get_log() # get_log defined in rfid_reader_f.h, return type is gr_msg_queue_sptr from gr
+    log_file.write("T,CMD,ERROR,BITS,SNR\n")
+    log = tb.reader.get_log()  # get_log defined in rfid_reader_f.h, return type is gr_msg_queue_sptr from gr
 
-            # The loop below is implemented like this for performance reasons, even though it would look nicer with a while true and a break
-            msg = log.delete_head_nowait()
-            while msg !=0:
-                print_log_msg(msg, log_file)
-                msg = log.delete_head_nowait()
+    # The loop below is implemented like this for performance reasons, even though it would look nicer with a while true and a break
+    msg = log.delete_head_nowait()
+    while msg != 0:
+        print_log_msg(msg, log_file)
+        msg = log.delete_head_nowait()
 
     tb.Stop(True)
 
@@ -203,6 +199,7 @@ def print_log_msg(msg, log_file):
         else:
             print "%s\t    %s EPC: %024X%s" % (fields[-1], fBlue, tmp, fReset)
             log_file.write(fields[-1] + ",EPC,0," + "%024X" % tmp + "," + snr + "\n");
+
 
 if __name__ == '__main__':
     main()
