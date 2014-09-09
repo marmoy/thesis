@@ -19,8 +19,7 @@ from string import strip
 #import os
 #import math
 import rfid
-#import wx
-#from threading import Timer
+
 
 
 log_file = open("log_out.log", "a")
