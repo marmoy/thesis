@@ -2,25 +2,25 @@
 # Developed by: Michael Buettner (buettner@cs.washington.edu)
 #Modified for USRP2 by: Yuanqing Zheng (yuanqing1@ntu.edu.sg)
 
-from gnuradio import digital
-from gnuradio import eng_notation
+#from gnuradio import digital
+#from gnuradio import eng_notation
 from gnuradio import gr, gru
 from gnuradio import uhd
+#from gnuradio.wxgui import scopesink2
 from gnuradio.wxgui import scopesink2
-from gnuradio.wxgui import scopesink2
-from gnuradio.eng_option import eng_option
-from gnuradio.gr import firdes
+#from gnuradio.eng_option import eng_option
+#from gnuradio.gr import firdes
 from grc_gnuradio import wxgui as grc_wxgui
-from optparse import OptionParser
+#from optparse import OptionParser
 from string import split
 from string import strip
-from string import atoi
-import time
-import os
-import math
+#from string import atoi
+#import time
+#import os
+#import math
 import rfid
-import wx
-from threading import Timer
+#import wx
+#from threading import Timer
 
 
 log_file = open("log_out.log", "a")
